@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Homepage{% endblock title %}
+
+{% block main_content %}
+
+<section class="container">
+    <div class="row justify-content-around text-center text-white mt-5">
+        <div class="col-sm-8 ">
+            <h3> Crud Table</h3>
+        </div>
+    </div>
+    <div class="row justify-content-around mt-3">
+        <div class="col-sm-8 ">
+            <a href="add_student" class="btn btn-primary float-end">Add</a>
+        </div>
+    </div>
+    <div class="row justify-content-around text-center text-white mt-1">
+        <div class="col-sm-8 ">
+            <table class="table table-hover table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Serial No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Roll No.</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for stud in studata %}
+                  <tr>  
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{stud.name}}</td>
+                    <td>{{stud.roll_no}}</td>
+                    <td>{{stud.Class}}</td>
+                    <td>{{stud.city}}</td>
+                    <td class="aline-inline">
+                      <table>
+                        <tr>
+                          <td>
+                            <form action="{% url 'delete_student'  %}" method="POST">
+                              {% csrf_token %}
+                              <input type="hidden" name="id" value="{{stud.id}}">
+                              <input type="submit" value="Delete" class="btn btn-primary btn-sm">
+                            </form>
+                            
+                          </td>
+                          <td>
+                            <a href="{% url 'edit_student' stud.id %}" class="btn btn-primary btn-sm">Edit</a>
+                          </td>
+                        </tr>
+                      </table>  
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+</section>
+
+{% endblock main_content %}
+
+
+    
